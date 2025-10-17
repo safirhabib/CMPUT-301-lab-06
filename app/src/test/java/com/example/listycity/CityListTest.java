@@ -1,4 +1,5 @@
 package com.example.listycity;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 class CityListTest {
@@ -43,5 +44,40 @@ class CityListTest {
     assertEquals(0, city.compareTo(cityList.getCities().get(0)));
     assertEquals(0, mockCity().compareTo(cityList.getCities().get(1)));
 }
+@Test
+void testHasCity(){
+        CityList mockCity = mockCityList();
+        City checkCityTrue = new City("Edmonton","Alberta");
+        assertTrue(mockCity.hasCity(checkCityTrue));
+    City checkCityFalse = new City("xyz","abc");
+    assertFalse(mockCity.hasCity(checkCityFalse));
+
+}
+@Test
+void testDeleteCityThrowsException(){
+    CityList mockdata = mockCityList();
+    City cityFails = new City("Ontario","Alberta");
+    assertThrows(IllegalArgumentException.class,()->{
+       mockdata.delete(cityFails);
+
+    });
+}
+@Test
+void testDeleteCityRemovesFromList(){
+    CityList mockdata = mockCityList();
+    City city=new City("Edmonton","Alberta");
+    mockdata.delete(city);
+    assertFalse(mockdata.hasCity(city));
+    assertEquals(0,mockdata.countCities());
+
+}
+@Test
+    public void testCountCities() {
+        CityList list = mockCityList();
+        assertEquals(1, list.countCities());
+        list.add(new City("Banff", "Alberta"));
+        assertEquals(2, list.countCities());
+    }
+
 
 }
